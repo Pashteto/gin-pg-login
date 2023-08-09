@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ template "Meta.html" . }}
+    <title>Log In</title>
+</head>
+<body>
+    {{ template "Navbar.html" . }}
+    {{ template "GuestNavMenu.html" . }}
+    {{ template "LoginForm.html" . }}
+    {{ template "BigLoader.html" . }}
+</body>
+</html>
+
+<script defer>
+    hideBigLoader()
+    closeNav()
+    window.onload = function() {
+        const user = parseUrlData();
+        document.getElementById('firstName').value = user.first_name;
+        document.getElementById('lastName').value = user.last_name;
+        document.getElementById('username').value = user.username;
+    };
+</script>

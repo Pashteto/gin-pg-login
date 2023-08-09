@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {{ template "Meta.html" . }}
+    <title>{{ .Location.Name }} | CFA Tools</title>
+</head>
+<body>
+    {{ template "Navbar.html" . }}
+    {{ template "UserNavMenu.html" . }}
+    {{ template "LocationDetails.html" . }}
+    {{ template "BigLoader.html" . }}
+	{{ template "AppList.html" . }}
+	{{ template "Footer.html" . }}
+</body>
+</html>
+
+<script>
+	closeNav()
+	hideBigLoader()
+</script>
+

@@ -1,0 +1,16 @@
+[Unit]
+Description=Telegram bot that does some stuff
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/ubuntu/apps/gin_login_bot
+ExecStart=/home/ubuntu/ubuntu/apps/gin_login_bot/gin_login_bot
+Restart=always
+RestartSec=600
+StandardOutput=inherit
+EnvironmentFile=/home/ubuntu/ubuntu/apps/gin_login_bot/config.env
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+
+[Install]
+WantedBy=multi-user.target

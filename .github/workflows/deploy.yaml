@@ -1,0 +1,73 @@
+name: Deploy App
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to deploy'
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      HOST: ubuntu@129.146.183.89
+      DEPLOY_DIRECTORY: ubuntu/apps/gin_login_bot
+#      CONFIG_PATH: ubuntu/apps/gin_login_bot/config/prod.yaml
+      ENV_FILE_PATH: ubuntu/apps/gin_login_bot/.env
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.inputs.tag }}
+      - name: Check if tag exists
+        run: |
+          git fetch --all --tags
+          if ! git tag | grep -q "^${{ github.event.inputs.tag }}$"; then
+            echo "error: Tag '${{ github.event.inputs.tag }}' not found"
+            exit 1
+          fi
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.20.2
+      - name: Build app
+        run: |
+          go mod download
+          go build -o gin_login_bot .
+      - name: Deploy to VM
+        run: |
+          sudo apt-get install -y ssh rsync
+          echo "$DEPLOY_SSH_KEY" > deploy_key.pem
+          chmod 600 deploy_key.pem
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "mkdir -p ${{ env.DEPLOY_DIRECTORY }}"
+          rsync -avz -e 'ssh -i deploy_key.pem -o StrictHostKeyChecking=no' --exclude='.git' ./ ${{ env.HOST }}:${{ env.DEPLOY_DIRECTORY }}
+        env:
+          DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+      - name: Remove old systemd service file
+        run: |
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "rm -f ubuntu/gin_login_bot.service"
+
+      - name: Create environment file on server
+        run: |
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "\
+          touch ${{ env.ENV_FILE_PATH }} && \
+          chmod 600 ${{ env.ENV_FILE_PATH }} && \
+#          echo 'CONFIG_PATH=${{ env.CONFIG_PATH }}' > ${{ env.ENV_FILE_PATH }} && \
+          echo 'TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}' >> ${{ env.ENV_FILE_PATH }} && \
+          echo 'WS_URL=${{secrets.WS_URL}}' >> ${{ env.ENV_FILE_PATH }}"
+
+      - name: Copy systemd service file
+        run: |
+          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/gin_login_bot.service ${{ env.HOST }}:/tmp/gin_login_bot.service
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/gin_login_bot.service /etc/systemd/system/gin_login_bot.service"
+
+      - name: Copy statics files
+        run: |
+          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/static ${{ env.HOST }}:/tmp/static
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/static /etc/systemd/system/gin_login_bot.service"
+
+      - name: Start application
+        run: |
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo systemctl daemon-reload && sudo systemctl restart gin_login_bot.service"

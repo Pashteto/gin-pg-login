@@ -1,0 +1,9 @@
+.vscode
+**/.vscode
+._.vscode
+.env
+tmp
+internal/handlers/conf.json
+keys
+data
+.idea
