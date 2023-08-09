@@ -16,11 +16,11 @@ func NewDatabase() *Database {
 	log.Printf("db conn: %s", os.Getenv("POSTGRES_URL"))
 	db, err := sql.Open("postgres", os.Getenv("POSTGRES_URL"))
 	if err != nil {
-		log.Panic(err.Error())
+		log.Fatalln(err.Error())
 	}
 	err = db.Ping()
 	if err != nil {
-		log.Panic(err.Error())
+		log.Fatalln(err.Error())
 	}
 
 	return &Database{

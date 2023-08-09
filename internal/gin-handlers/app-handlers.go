@@ -62,7 +62,7 @@ func (gh GinHandlers) Locations(c *gin.Context) {
 	}
 	locations, err := gh.database.GetLocationsByUserID(userModel.ID)
 	if err != nil {
-		log.Panic(err.Error())
+		log.Fatalln(err.Error())
 	}
 	hasNoLocations := len(locations) == 0
 	//fmt.Println(hasNoLocations)
@@ -85,7 +85,7 @@ func (gh GinHandlers) LocationId(c *gin.Context) {
 	locationID := c.Params.ByName("id")
 	locationModel, err := gh.database.GetLocationByID(locationID)
 	if err != nil {
-		log.Panic(err.Error())
+		log.Fatalln(err.Error())
 	}
 	if userModel.ID != locationModel.UserID {
 		c.Redirect(303, "/locations")
@@ -184,7 +184,7 @@ func (gh GinHandlers) LocationPost(c *gin.Context) {
 	}
 	err = locationModel.Insert(gh.database)
 	if err != nil {
-		log.Panic(err.Error())
+		log.Fatalln(err.Error())
 	}
 	c.Redirect(303, "/locations")
 }

@@ -20,7 +20,7 @@ func main() {
 
 	err := godotenv.Load()
 	if err != nil {
-		log.Panic(err.Error())
+		log.Fatalln(err.Error())
 	}
 
 	//==========================================================================
