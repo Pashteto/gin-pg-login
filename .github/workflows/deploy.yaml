@@ -54,19 +54,19 @@ jobs:
           ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "\
           touch ${{ env.ENV_FILE_PATH }} && \
           chmod 600 ${{ env.ENV_FILE_PATH }} && \
-#          echo 'CONFIG_PATH=${{ env.CONFIG_PATH }}' > ${{ env.ENV_FILE_PATH }} && \
           echo 'TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}' >> ${{ env.ENV_FILE_PATH }} && \
           echo 'WS_URL=${{secrets.WS_URL}}' >> ${{ env.ENV_FILE_PATH }}"
+          #          echo 'CONFIG_PATH=${{ env.CONFIG_PATH }}' > ${{ env.ENV_FILE_PATH }} && \
 
       - name: Copy systemd service file
         run: |
           scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/gin_login_bot.service ${{ env.HOST }}:/tmp/gin_login_bot.service
           ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/gin_login_bot.service /etc/systemd/system/gin_login_bot.service"
 
-#      - name: Copy statics files
-#        run: |
-#          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/static ${{ env.HOST }}:/tmp/static
-#          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/static /etc/systemd/system/gin_login_bot.service"
+      #      - name: Copy statics files
+      #        run: |
+      #          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/static ${{ env.HOST }}:/tmp/static
+      #          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/static /etc/systemd/system/gin_login_bot.service"
 
       - name: Start application
         run: |
