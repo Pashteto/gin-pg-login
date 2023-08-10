@@ -11,7 +11,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     env:
-      HOST: ubuntu@129.146.183.89
+      HOST: ${{secrets.HOTHOST}}
       DEPLOY_DIRECTORY: ubuntu/apps/gin_login_bot
       ENV_FILE_PATH: ubuntu/apps/gin_login_bot/.env
     #      CONFIG_PATH: ubuntu/apps/gin_login_bot/config/prod.yaml

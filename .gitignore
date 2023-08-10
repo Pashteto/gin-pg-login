@@ -7,3 +7,4 @@ internal/handlers/conf.json
 keys
 data
 .idea
+docker-compose.yaml
