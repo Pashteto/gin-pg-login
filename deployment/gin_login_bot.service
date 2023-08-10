@@ -1,5 +1,5 @@
 [Unit]
-Description=Telegram bot that does some stuff
+Description=API for some bot stuff, and web pages for some other stuff
 After=network.target
 
 [Service]
@@ -9,7 +9,7 @@ ExecStart=/home/ubuntu/ubuntu/apps/gin_login_bot/gin_login_bot
 Restart=always
 RestartSec=600
 StandardOutput=inherit
-EnvironmentFile=/home/ubuntu/ubuntu/apps/gin_login_bot/config.env
+#EnvironmentFile=/home/ubuntu/ubuntu/apps/gin_login_bot/config.env
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 
 [Install]
