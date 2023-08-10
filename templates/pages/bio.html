@@ -11,7 +11,7 @@
             background-color: #000000;
             color: #ffffff;
             margin: 0;
-            height: 100vh;
+            height: 50vh;
             display: flex;
             justify-content: flex-start;
             align-items: center;
@@ -58,43 +58,38 @@
             border-radius: 4px; /* rounded corners */
         }
 
-        .flying-sandwich {
+        #sandwich1, #sandwich2 {
             position: absolute;
-            width: 100px;
-            animation-duration: 10s;
-            animation-timing-function: linear;
-            animation-iteration-count: infinite;
-            z-index: 2;
+            width: 150px; /* You can adjust this */
+            height: auto;
+            z-index: 10;
         }
 
-        /*.sandwich1 {*/
-        /*    top: 10%;*/
-        /*    left: 0;*/
-        /*    animation-name: flyRight;*/
+        /*#sandwich1 {*/
+        /*    width: 150px; !* Adjust the size as you see fit *!*/
         /*}*/
 
-        /*.sandwich2 {*/
-        /*    bottom: 10%;*/
-        /*    right: 0;*/
-        /*    animation-name: flyLeft;*/
+        /*#sandwich2 {*/
+        /*    width: 20px; !* Adjust the size as you see fit *!*/
         /*}*/
-        .dvd-bounce img {
-            position: absolute;
-            width: 100px; /* adjust size as needed */
-            z-index: 1000; /* To ensure it stays on top of other content */
-        }
 
-        @keyframes flyRight {
-            0% { left: 0; top: 10%; }
-            50% { left: 80%; top: 80%; }
-            100% { left: 0; top: 10%; }
-        }
+        /*.dvd-bounce img {*/
+        /*    position: absolute;*/
+        /*    width: 55px; !* adjust size as needed *!*/
+        /*    z-index: 1000; !* To ensure it stays on top of other content *!*/
+        /*}*/
 
-        @keyframes flyLeft {
-            0% { right: 0; bottom: 10%; }
-            50% { right: 80%; bottom: 80%; }
-            100% { right: 0; bottom: 10%; }
-        }
+        /*@keyframes flyRight {*/
+        /*    0% { left: 0; top: 10%; }*/
+        /*    50% { left: 80%; top: 80%; }*/
+        /*    100% { left: 0; top: 10%; }*/
+        /*}*/
+
+        /*@keyframes flyLeft {*/
+        /*    0% { right: 0; bottom: 10%; }*/
+        /*    50% { right: 80%; bottom: 80%; }*/
+        /*    100% { right: 0; bottom: 10%; }*/
+        /*}*/
     </style>
 </head>
 <body>
