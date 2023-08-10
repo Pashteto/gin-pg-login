@@ -55,7 +55,7 @@ jobs:
           touch ${{ env.ENV_FILE_PATH }} && \
           chmod 600 ${{ env.ENV_FILE_PATH }} && \
           echo 'DOMAIN=${{ secrets.DOMAIN }}' > ${{ env.ENV_FILE_PATH }} && \
-          echo 'POSTGRES_URL=${{secrets.POSTGRES_URL}}' >> ${{ env.ENV_FILE_PATH }}" && \
+          echo 'POSTGRES_URL=${{secrets.POSTGRES_URL}}' >> ${{ env.ENV_FILE_PATH }} && \
           echo 'SESSION_TOKEN_KEY=${{secrets.SESSION_TOKEN_KEY}}' >> ${{ env.ENV_FILE_PATH }}"
       #          echo 'CONFIG_PATH=${{ env.CONFIG_PATH }}' > ${{ env.ENV_FILE_PATH }} && \
 
