@@ -13,8 +13,8 @@ jobs:
     env:
       HOST: ubuntu@129.146.183.89
       DEPLOY_DIRECTORY: ubuntu/apps/gin_login_bot
-#      CONFIG_PATH: ubuntu/apps/gin_login_bot/config/prod.yaml
       ENV_FILE_PATH: ubuntu/apps/gin_login_bot/.env
+    #      CONFIG_PATH: ubuntu/apps/gin_login_bot/config/prod.yaml
 
     steps:
       - name: Checkout repository
@@ -48,7 +48,6 @@ jobs:
       - name: Remove old systemd service file
         run: |
           ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "rm -f ubuntu/gin_login_bot.service"
-
       - name: Create environment file on server
         run: |
           ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "\
@@ -63,10 +62,10 @@ jobs:
           scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/deployment/gin_login_bot.service ${{ env.HOST }}:/tmp/gin_login_bot.service
           ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/gin_login_bot.service /etc/systemd/system/gin_login_bot.service"
 
-      - name: Copy statics files
-        run: |
-          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/static ${{ env.HOST }}:/tmp/static
-          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/static /etc/systemd/system/gin_login_bot.service"
+#      - name: Copy statics files
+#        run: |
+#          scp -i deploy_key.pem -o StrictHostKeyChecking=no ${{ github.workspace }}/static ${{ env.HOST }}:/tmp/static
+#          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "sudo mv /tmp/static /etc/systemd/system/gin_login_bot.service"
 
       - name: Start application
         run: |
