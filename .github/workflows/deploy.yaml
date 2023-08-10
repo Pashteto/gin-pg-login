@@ -46,7 +46,10 @@ jobs:
         env:
           DEPLOY_SSH_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
       - name: Remove old systemd service file
-        run: ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "rm -f ubuntu/gin_login_bot.service"
+        run: |
+          "ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} \"rm -f ubuntu/gin_login_bot.service\""
+#          ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "rm -f ubuntu/gin_login_bot.service"
+
       - name: Create environment file on server
         run: |
           ssh -i deploy_key.pem -o StrictHostKeyChecking=no ${{ env.HOST }} "\
