@@ -222,9 +222,11 @@ func (gh GinHandlers) ProfileCreated(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "profileCreated.html", gin.H{
-		"ProfileFormErr": c.Query("ProfileFormErr"),
-		"User":           userModel,
-		"Banner":         "Profile",
+		"ProfileFormErr":        c.Query("ProfileFormErr"),
+		"User":                  userModel,
+		"Banner":                "Profile",
+		"SearchPreferenceLabel": types.SearchPreferenceLabel(userModel.SearchFor),
+		"LocationLabel":         types.LocationLabel(userModel.Location),
 	})
 }
 
@@ -237,9 +239,11 @@ func (gh GinHandlers) ProfilePage(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "profilePage.html", gin.H{
-		"ProfileFormErr": c.Query("ProfileFormErr"),
-		"User":           userModel,
-		"Banner":         "Profile",
+		"ProfileFormErr":        c.Query("ProfileFormErr"),
+		"User":                  userModel,
+		"Banner":                "Profile",
+		"SearchPreferenceLabel": types.SearchPreferenceLabel(userModel.SearchFor),
+		"LocationLabel":         types.LocationLabel(userModel.Location),
 	})
 }
 func (gh GinHandlers) ProfileSummary(c *gin.Context) {

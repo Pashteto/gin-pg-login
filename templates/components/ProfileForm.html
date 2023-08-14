@@ -1,17 +1,19 @@
 <form id="profile-form" style="display: none;">
-	<br><br><h2 class="font-serif mb-4 text-lg">Profile</h2>
+	<br><br><h2 class="font-serif mb-4 text-lg">Your Profile</h2>
 	<p class="mb-4 text-xs text-red-700">{{ .ProfileFormErr }}</p>
 	<label for="usernameform">Username:</label><br>
 	<input type="text" id="usernameform" name="username" value= {{ .User.Nickname }} readonly></input><br><br>
 	<label for="firstNameform">First Name:</label><br>
-	<input type="text" id="firstNameform" name="firstName" value= {{ .User.FirstName.String }} readonly></input><br><br>
+	<input type="text" id="firstNameform" name="firstName" value="{{ if .User.FirstName.Valid }}{{ .User.FirstName.String }}{{ else }}{{ end }}" readonly></input><br><br>
+
+
 	<label for="lastNameform">Last Name:</label><br>
-	<input type="text" id="lastNameform" name="lastName" value= {{ .User.LastName.String }} readonly></input><br><br>
+	<input type="text" id="lastNameform" name="lastName" value="{{ if .User.LastName.Valid }}{{ .User.LastName.String }}{{ else }}{{ end }}" readonly></input><br><br>
 	<label for="searchPreferenceform">Who are you searching for?</label><br>
-	<input type="text" id="searchPreferenceform" name="searchPreference" value= {{ .User.SearchFor.String }} readonly></input><br><br>
+	<input type="text" id="searchPreferenceform" name="searchPreference" value="{{ .SearchPreferenceLabel }}" readonly></input><br><br>
 	<label for="locationform">Where are you?</label><br>
-	<input type="text" id="locationform" name="location" value= {{ .User.Location.String }} readonly></input><br><br>
-	<label for="descriptionform">Description:</label>
+	<input type="text" id="locationform" name="location" value="{{ .LocationLabel }}" readonly></input><br><br>
+	<label for="descriptionform">Description:</label><br>
 	<textarea id="descriptionform" name="description" readonly>{{ .User.Description.String }}</textarea><br><br>
 </form>
 

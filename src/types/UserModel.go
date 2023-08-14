@@ -244,4 +244,34 @@ func (userModel *UserModel) FindById(database *Database, userId int64) error {
 
 //==========================================================================
 
-//==========================================================================
+// ==========================================================================
+func SearchPreferenceLabel(value sql.NullString) string {
+	if !value.Valid {
+		return ""
+	}
+	switch value.String {
+	case "friend_online":
+		return "Friend to meet online"
+	case "friend_offline":
+		return "Friend to meet offline"
+	case "help_project":
+		return "Help with my pet project"
+	default:
+		return ""
+	}
+}
+
+func LocationLabel(value sql.NullString) string {
+	if !value.Valid {
+		return ""
+	}
+	switch value.String {
+	case "Georgia":
+		return "Georgia"
+	case "Serbia":
+		return "Serbia"
+	//... другие значения
+	default:
+		return "Someplace else"
+	}
+}
