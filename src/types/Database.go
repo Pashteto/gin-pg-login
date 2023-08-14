@@ -48,8 +48,20 @@ func (d *Database) CreateUserTable() error {
 	query := `
 	CREATE TABLE IF NOT EXISTS "user" (
 		id SERIAL PRIMARY KEY,
-		email TEXT UNIQUE NOT NULL,
-		password TEXT NOT NULL
+		nickname TEXT UNIQUE NOT NULL,
+		password TEXT NOT NULL,
+		first_name TEXT,
+		last_name TEXT,
+		location TEXT,
+		description TEXT,
+		avatar_link TEXT,	
+		search_for TEXT,
+		show_people INT,
+		old_matches TEXT,
+		new_matches TEXT,
+		last_login timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		created_at timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP,
+		updated_at timestamp without time zone NOT NULL DEFAULT CURRENT_TIMESTAMP
 		)
 	`
 	_, err := d.Connection.Exec(query)

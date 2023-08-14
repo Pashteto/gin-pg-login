@@ -8,3 +8,4 @@ keys
 data
 .idea
 docker-compose.yaml
+db

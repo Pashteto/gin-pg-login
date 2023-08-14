@@ -12,8 +12,14 @@
 </body>
 </html>
 
-<script>
-	closeNav()
+<script defer>
+    closeNav()
 	hideBigLoader()
+    window.onload = function() {
+        const user = parseUrlData();
+        document.getElementById('firstName').value = user.first_name;
+        document.getElementById('lastName').value = user.last_name;
+        document.getElementById('username').value = user.username;
+    };
 </script>
 

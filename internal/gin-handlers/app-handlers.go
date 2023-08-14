@@ -29,12 +29,12 @@ func NewGinHandlers(database *types.Database, domain string) *GinHandlers {
 func (gh GinHandlers) Entry(c *gin.Context) {
 	_, err := c.Cookie(os.Getenv("SESSION_TOKEN_KEY"))
 	if err == nil {
-		c.Redirect(303, "/locations")
+		c.Redirect(303, "/profile_page")
 
 		return
 	}
 	c.HTML(200, "index.html", gin.H{
-		"Banner":       "CFA Tools",
+		//"Banner":       "CFA Tools",
 		"LoginFormErr": c.Query("LoginFormErr"),
 	})
 }
@@ -47,7 +47,7 @@ func (gh GinHandlers) SignUp(c *gin.Context) {
 		return
 	}
 	c.HTML(200, "signup.html", gin.H{
-		"Banner":        "CFA Tools",
+		//"Banner":        "CFA Tools",
 		"SignupFormErr": c.Query("SignupFormErr"),
 	})
 }
@@ -110,7 +110,7 @@ func (gh GinHandlers) Logout(c *gin.Context) {
 // r.POST("/actions/signup", func(c *gin.Context) {
 func (gh GinHandlers) SignUpPost(c *gin.Context) {
 	userModel := types.NewUserModel()
-	userModel.SetEmail(c.PostForm("email"))
+	userModel.SetNickName(c.PostForm("username"))
 	var err error
 	userModel, err = userModel.SetPassword(c.PostForm("password"))
 	if err != nil {
@@ -121,25 +121,37 @@ func (gh GinHandlers) SignUpPost(c *gin.Context) {
 		c.Redirect(303, fmt.Sprintf("/signup?SignupFormErr=%s", err.Error()))
 		return
 	}
+	userModel.SetSearchPref(c.PostForm("searchPreference"))
+	userModel.SetDescription(c.PostForm("description"))
+	userModel.SetLocation(c.PostForm("location"))
+	userModel.SetNames(c.PostForm("firstName"), c.PostForm("lastName"))
+
 	err = userModel.Insert(gh.database)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	c.Redirect(303, "/bot")
+	//c.Redirect(303, "/bot")
+	gh.LoginPost(c)
 }
 
 // r.POST("/actions/login", func(c *gin.Context) {
 func (gh GinHandlers) LoginPost(c *gin.Context) {
-	userModel, err := types.NewUserModel().FindByEmail(gh.database, c.PostForm("email"))
+	userModel, err := types.NewUserModel().FindByEmail(gh.database, c.PostForm("username"))
 	if err != nil {
 		c.Redirect(303, fmt.Sprintf("/?LoginFormErr=%s", "invalid credentials"))
 		return
 	}
 	err = userModel.ComparePassword(c.PostForm("password"))
 	if err != nil {
-		c.Redirect(303, fmt.Sprintf("/?LoginFormErr=%s", "invalid credentials"))
+		c.Redirect(303, fmt.Sprintf("/bot?LoginFormErr=%s", "invalid credentials"))
 		return
 	}
+
+	//err = userModel.Insert(gh.database)
+	//if err != nil {
+	//	log.Fatal(err.Error())
+	//}
+
 	err = userModel.DeleteSessionsByUser(gh.database)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -150,7 +162,8 @@ func (gh GinHandlers) LoginPost(c *gin.Context) {
 		log.Fatal(err.Error())
 	}
 	c.SetCookie(os.Getenv("SESSION_TOKEN_KEY"), sessionModel.Token, 86400, "/", gh.domain, true, true)
-	c.Redirect(303, "/locations")
+	//c.Redirect(303, "/locations")
+	c.Redirect(303, "/profile_created")
 }
 
 // r.POST("/actions/login", func(c *gin.Context) {
@@ -187,4 +200,50 @@ func (gh GinHandlers) LocationPost(c *gin.Context) {
 		log.Fatalln(err.Error())
 	}
 	c.Redirect(303, "/locations")
+}
+
+/*
+hxCurrentURL := c.GetHeader("Hx-Current-Url")
+	redirectURL := "/bot"
+		redirectURL += fmt.Sprintf("?LoginFormErr=%s", "invalid%20credentials")
+		ssss := strings.Split(hxCurrentURL, "#tgWebAppData")
+		if len(ssss) > 0 {
+			redirectURL += "#tgWebAppData" + ssss[1]
+		}
+		c.Redirect(303, redirectURL)
+*/
+
+// s.r.GET("/profile_created", s.gh.ProfileCreated)
+func (gh GinHandlers) ProfileCreated(c *gin.Context) {
+	userModel := types.NewUserModel()
+	err := userModel.Auth(c, gh.database)
+	if err != nil {
+		c.Redirect(303, "/bot")
+		return
+	}
+	c.HTML(200, "profileCreated.html", gin.H{
+		"ProfileFormErr": c.Query("ProfileFormErr"),
+		"User":           userModel,
+		"Banner":         "Profile",
+	})
+}
+
+// s.r.GET("/profile_page", s.gh.ProfilePage)
+func (gh GinHandlers) ProfilePage(c *gin.Context) {
+	userModel := types.NewUserModel()
+	err := userModel.Auth(c, gh.database)
+	if err != nil {
+		c.Redirect(303, "/bot")
+		return
+	}
+	c.HTML(200, "profilePage.html", gin.H{
+		"ProfileFormErr": c.Query("ProfileFormErr"),
+		"User":           userModel,
+		"Banner":         "Profile",
+	})
+}
+func (gh GinHandlers) ProfileSummary(c *gin.Context) {
+	c.HTML(200, "profileData.html", gin.H{
+		"Banner": "Mantra 1",
+	})
 }

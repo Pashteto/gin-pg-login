@@ -68,6 +68,10 @@ func (s Servo) InitRoutes() {
 
 	s.r.GET("/logout", s.gh.Logout)
 
+	s.r.GET("/profile_created", s.gh.ProfileCreated)
+
+	s.r.GET("/profile_page", s.gh.ProfilePage)
+
 	//==========================================================================
 	// ACTIONS
 	//==========================================================================

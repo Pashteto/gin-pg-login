@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="/static/favicon.ico" rel="icon" type="image/x-icon" />
+    <title>Mantra</title>
+    <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+<!--    <link rel="stylesheet bio" href="/static/bio-style-profile.css">-->
+</head>
+<body>
+<div>
+    <h1>Your profile is Created!</h1>
+</div>
+{{ template "ProfileForm.html" . }}
+<button id="addProfileButton" class="addProfileButton"> Show My Profile </button>
+<div id="extraText23"><h1></h1></div>
+<button id="addSearchResButton" class="addSearchResButton">Search results</button>
+<script>
+
+    document.getElementById("addProfileButton").addEventListener("click", function() {
+        const form = document.getElementById("profile-form");
+        if (form.style.display === "none") {
+            form.style.display = "block";
+        } else {
+            form.style.display = "none";
+        }
+    });
+    document.getElementById("addSearchResButton").addEventListener("click", function() {
+        var newText = document.createElement("p");
+        newText.textContent = "...here is a place for a summary of users that match your search criteria with a link to their profiles";
+        document.getElementById("extraText23").appendChild(newText);
+        this.style.display = "none"; // hides the button
+    });
+
+</script>
+</body>
+</html>

@@ -82,3 +82,30 @@ function parseUrlData() {
 	const user = JSON.parse(decodeURIComponent(userJson));
 	return user;
 }
+
+function handleFormSubmit(event) {
+	event.preventDefault();  // prevent form from submitting immediately
+	showBigLoader();
+
+	// You can then submit the form programmatically after your logic
+	document.getElementById('signup-form').submit();
+}
+
+
+document.getElementById('login-form').addEventListener('submit', function() {
+	// Get current URL fragment
+	const fragment = window.location.hash;
+
+	// Append it to the form's action URL
+	this.action += fragment;
+
+	const fragment1 = sessionStorage.getItem('urlFragment');
+	if (fragment1) {
+		window.location.hash = fragment1;
+	}
+});
+
+// Save fragment to session storage when page loads
+if (window.location.hash) {
+	sessionStorage.setItem('urlFragment', window.location.hash);
+}
