@@ -57,7 +57,7 @@ func (gh GinHandlers) Locations(c *gin.Context) {
 	userModel := types.NewUserModel()
 	err := userModel.Auth(c, gh.database)
 	if err != nil {
-		c.Redirect(303, "/bot")
+		c.Redirect(303, "/bot1")
 		return
 	}
 	locations, err := gh.database.GetLocationsByUserID(userModel.ID)
@@ -79,7 +79,7 @@ func (gh GinHandlers) LocationId(c *gin.Context) {
 	userModel := types.NewUserModel()
 	err := userModel.Auth(c, gh.database)
 	if err != nil {
-		c.Redirect(303, "/bot")
+		c.Redirect(303, "/bot1")
 		return
 	}
 	locationID := c.Params.ByName("id")
@@ -100,7 +100,7 @@ func (gh GinHandlers) LocationId(c *gin.Context) {
 // r.GET("/logout", func(c *gin.Context) {
 func (gh GinHandlers) Logout(c *gin.Context) {
 	c.SetCookie(os.Getenv("SESSION_TOKEN_KEY"), "", -1, "/", gh.domain, true, true)
-	c.Redirect(303, "/bot")
+	c.Redirect(303, "/bot1")
 }
 
 //==========================================================================
@@ -130,7 +130,7 @@ func (gh GinHandlers) SignUpPost(c *gin.Context) {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
-	//c.Redirect(303, "/bot")
+	//c.Redirect(303, "/bot1")
 	gh.LoginPost(c)
 }
 
@@ -143,7 +143,7 @@ func (gh GinHandlers) LoginPost(c *gin.Context) {
 	}
 	err = userModel.ComparePassword(c.PostForm("password"))
 	if err != nil {
-		c.Redirect(303, fmt.Sprintf("/bot?LoginFormErr=%s", "invalid credentials"))
+		c.Redirect(303, fmt.Sprintf("/bot1?LoginFormErr=%s", "invalid credentials"))
 		return
 	}
 
@@ -204,7 +204,7 @@ func (gh GinHandlers) LocationPost(c *gin.Context) {
 
 /*
 hxCurrentURL := c.GetHeader("Hx-Current-Url")
-	redirectURL := "/bot"
+	redirectURL := "/bot1"
 		redirectURL += fmt.Sprintf("?LoginFormErr=%s", "invalid%20credentials")
 		ssss := strings.Split(hxCurrentURL, "#tgWebAppData")
 		if len(ssss) > 0 {
@@ -218,7 +218,7 @@ func (gh GinHandlers) ProfileCreated(c *gin.Context) {
 	userModel := types.NewUserModel()
 	err := userModel.Auth(c, gh.database)
 	if err != nil {
-		c.Redirect(303, "/bot")
+		c.Redirect(303, "/bot1")
 		return
 	}
 	c.HTML(200, "profileCreated.html", gin.H{
@@ -233,7 +233,7 @@ func (gh GinHandlers) ProfilePage(c *gin.Context) {
 	userModel := types.NewUserModel()
 	err := userModel.Auth(c, gh.database)
 	if err != nil {
-		c.Redirect(303, "/bot")
+		c.Redirect(303, "/bot1")
 		return
 	}
 	c.HTML(200, "profilePage.html", gin.H{
