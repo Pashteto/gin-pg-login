@@ -3,7 +3,7 @@ body {
     background-color: #000000;
     color: #ffffff;
     margin: 0;
-    height: 50vh; /* already relative to the viewport height */
+    height: 1vh; /* already relative to the viewport height */
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -36,18 +36,18 @@ body {
     color: #ffffff;
 }
 .addTextButton {
-    padding: 10px 20px; /* size */
+    padding: 1em 2em; /* relative to the current font-size */
     background-color: #008CBA; /* color */
     border: none; /* remove default border */
     color: black; /* text color */
     text-align: center; /* align text */
     text-decoration: none; /* remove underline */
     display: inline-block;
-    font-size: 16px; /* text size */
-    margin: 4px 2px;
+    font-size: 1rem; /* relative to the root font-size */
+    /*margin: 4px 2px;*/
     transition-duration: 0.4s; /* transition effect */
     cursor: pointer; /* change cursor style on hover */
-    border-radius: 4px; /* rounded corners */
+    border-radius: 1em; /* rounded corners */
 }
 
 #sandwich1, #sandwich2 {
@@ -56,29 +56,3 @@ body {
     height: auto;
     z-index: 10;
 }
-
-/*#sandwich1 {*/
-/*    width: 150px; !* Adjust the size as you see fit *!*/
-/*}*/
-
-/*#sandwich2 {*/
-/*    width: 20px; !* Adjust the size as you see fit *!*/
-/*}*/
-
-/*.dvd-bounce img {*/
-/*    position: absolute;*/
-/*    width: 55px; !* adjust size as needed *!*/
-/*    z-index: 1000; !* To ensure it stays on top of other content *!*/
-/*}*/
-
-/*@keyframes flyRight {*/
-/*    0% { left: 0; top: 10%; }*/
-/*    50% { left: 80%; top: 80%; }*/
-/*    100% { left: 0; top: 10%; }*/
-/*}*/
-
-/*@keyframes flyLeft {*/
-/*    0% { right: 0; bottom: 10%; }*/
-/*    50% { right: 80%; bottom: 80%; }*/
-/*    100% { right: 0; bottom: 10%; }*/
-/*}*/

@@ -11,12 +11,13 @@
 <div id="bio" hx-get="/getBio" hx-trigger="load">
     Loading...
 </div>
-<button id="addTextButton" class="addTextButton">...?</button>
-<div id="extraText"><h1></h1></div>
+<button id="addTextButton" class="addTextButton" style="font-size: 7vh;">...?</button>
+<div id="extraText"><p></p></div>
 <script>
     document.getElementById("addTextButton").addEventListener("click", function() {
         var newText = document.createElement("p");
-        newText.textContent = "...is to stay kind, humble and keep learning.";
+        newText.textContent = "...is to stay humble and keep learning.";
+        newText.style="font-size: 7vh;";
         document.getElementById("extraText").appendChild(newText);
         this.style.display = "none"; // hides the button
     });
