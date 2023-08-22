@@ -20,13 +20,39 @@ document.addEventListener('DOMContentLoaded', (event) => {
     sandwich2.style.top = y2 + 'px';
 
     function moveSandwich() {
-        // Check bounds for sandwich1
-        if (x1 + sandwich1.offsetWidth > window.innerWidth || x1 < 0) deltaX1 = -deltaX1;
-        if (y1 + sandwich1.offsetHeight > window.innerHeight || y1 < 0) deltaY1 = -deltaY1;
+// Check bounds for sandwich1
+        if (x1 + sandwich1.offsetWidth > window.innerWidth) {
+            deltaX1 = -deltaX1;
+            x1 = window.innerWidth - sandwich1.offsetWidth;  // Correct the position
+        } else if (x1 < 0) {
+            deltaX1 = -deltaX1;
+            x1 = 0;  // Correct the position
+        }
 
-        // Check bounds for sandwich2
-        if (x2 + sandwich2.offsetWidth > window.innerWidth || x2 < 0) deltaX2 = -deltaX2;
-        if (y2 + sandwich2.offsetHeight > window.innerHeight || y2 < 0) deltaY2 = -deltaY2;
+        if (y1 + sandwich1.offsetHeight > window.innerHeight) {
+            deltaY1 = -deltaY1;
+            y1 = window.innerHeight - sandwich1.offsetHeight;  // Correct the position
+        } else if (y1 < 0) {
+            deltaY1 = -deltaY1;
+            y1 = 0;  // Correct the position
+        }
+
+// Similarly, for sandwich2
+        if (x2 + sandwich2.offsetWidth > window.innerWidth) {
+            deltaX2 = -deltaX2;
+            x2 = window.innerWidth - sandwich2.offsetWidth;  // Correct the position
+        } else if (x2 < 0) {
+            deltaX2 = -deltaX2;
+            x2 = 0;  // Correct the position
+        }
+
+        if (y2 + sandwich2.offsetHeight > window.innerHeight) {
+            deltaY2 = -deltaY2;
+            y2 = window.innerHeight - sandwich2.offsetHeight;  // Correct the position
+        } else if (y2 < 0) {
+            deltaY2 = -deltaY2;
+            y2 = 0;  // Correct the position
+        }
 
         x1 += deltaX1;
         y1 += deltaY1;

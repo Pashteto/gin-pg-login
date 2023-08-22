@@ -52,7 +52,7 @@ body {
 
 #sandwich1, #sandwich2 {
     position: absolute;
-    width: 25vw; /* relative to 15% of the viewport's width */
+    width: 20vw; /* relative to 25% of the viewport's width */
     height: auto;
     z-index: 10;
 }
