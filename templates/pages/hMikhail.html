@@ -38,7 +38,7 @@
             background-color: #000000;
             color: #ffffff;
         }
-        .copyButton {
+        .copyButton, .copiedText {
         //padding: 10px 20px; /* size */
         //background-color: #008CBA; /* color */
         //border: none; /* remove default border */
@@ -58,7 +58,11 @@
 <div class="content-container">
     <div class="info-block">
         <h2>Сбор на Сбербанк:</h2>
-        <p class="highlight"><span id="itemBOGN">2202 2036 8646 0710</span>  <button class="copyButton" data-copy-target="#itemBOGN">Copy</button></p>
+        <p class="highlight">
+            <span id="itemBOGN">2202 2036 8646 0710</span>
+            <button class="copyButton" data-copy-target="#itemBOGN">Copy</button>
+            <span class="copiedText" style="display: none;">Copied!</span>
+        </p>
         <p>Елена Владимировна</p>
         <p>Жена Михаила Афанасьева</p>
     </div>
@@ -70,8 +74,13 @@
             var copyTarget = document.querySelector(copyTargetId);
             if(copyTarget) {
                 try {
-                    await navigator.clipboard.writeText(copyTarget.textContent);
+                    await navigator.clipboard.writeText("2202203686460710");
                     console.log('Copying to clipboard was successful!');
+                    let copiedText = this.nextElementSibling;
+                    copiedText.style.display = "inline";
+                    setTimeout(() => {
+                        copiedText.style.display = "none";
+                    }, 2000); // Hide the "Copied!" text after 2 seconds
                 } catch (err) {
                     console.error('Failed to copy text: ', err);
                 }
