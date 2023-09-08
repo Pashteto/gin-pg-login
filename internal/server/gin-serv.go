@@ -55,6 +55,8 @@ func (s Servo) InitRoutes() {
 
 	s.r.GET("/helping-nikita", s.gh.GetNikita)
 
+	s.r.GET("/helping-mikhail", s.gh.GetMikhail)
+
 	//==========================================================================
 	// PAGES
 	//==========================================================================

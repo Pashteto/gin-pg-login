@@ -17,3 +17,10 @@ func (gh GinHandlers) GetElena(c *gin.Context) {
 		"Banner": "Mantra",
 	})
 }
+
+// GetMikhail req.
+func (gh GinHandlers) GetMikhail(c *gin.Context) {
+	c.HTML(200, "hMikhail.html", gin.H{
+		"Banner": "Mantra",
+	})
+}
