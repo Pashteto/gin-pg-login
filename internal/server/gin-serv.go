@@ -60,29 +60,30 @@ func (s Servo) InitRoutes() {
 	//==========================================================================
 	// PAGES
 	//==========================================================================
-	s.r.GET("/bot1", s.gh.Entry)
+	/*	s.r.GET("/bot1", s.gh.Entry)
 
-	s.r.GET("/signup", s.gh.SignUp)
+		s.r.GET("/signup", s.gh.SignUp)
 
-	s.r.GET("/locations", s.gh.Locations)
+		s.r.GET("/locations", s.gh.Locations)
 
-	s.r.GET("/location/:id", s.gh.LocationId)
+		s.r.GET("/location/:id", s.gh.LocationId)
 
-	s.r.GET("/logout", s.gh.Logout)
+		s.r.GET("/logout", s.gh.Logout)
 
-	s.r.GET("/profile_created", s.gh.ProfileCreated)
+		s.r.GET("/profile_created", s.gh.ProfileCreated)
 
-	s.r.GET("/profile_page", s.gh.ProfilePage)
+		s.r.GET("/profile_page", s.gh.ProfilePage)
 
-	//==========================================================================
-	// ACTIONS
-	//==========================================================================
+		//==========================================================================
+		// ACTIONS
+		//==========================================================================
 
-	s.r.POST("/actions/signup", s.gh.SignUpPost)
+		s.r.POST("/actions/signup", s.gh.SignUpPost)
 
-	s.r.POST("/actions/login", s.gh.LoginPost)
+		s.r.POST("/actions/login", s.gh.LoginPost)
 
-	s.r.POST("/actions/location", s.gh.LocationPost)
+		s.r.POST("/actions/location", s.gh.LocationPost)
+	*/
 }
 
 func (s Servo) Run() {

@@ -27,17 +27,19 @@ func main() {
 	// DATABASE
 	//==========================================================================
 
-	database := types.NewDatabase()
-	err = database.InitTables()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
+	// TODO servers pg is dead for some reason
+	/*	database := types.NewDatabase()
+		err = database.InitTables()
+		if err != nil {
+			log.Fatal(err.Error())
+		}
+	*/
 	//==========================================================================
 	// ROUTER
 	//==========================================================================
 
-	servHandlers := gin_handlers.NewGinHandlers(database, os.Getenv("DOMAIN"))
+	servHandlers := gin_handlers.NewGinHandlers(&types.Database{}, os.Getenv("DOMAIN"))
+	//servHandlers := gin_handlers.NewGinHandlers(database, os.Getenv("DOMAIN"))
 
 	routs := server.NewServo(servHandlers, os.Getenv("PORTN"))
 	routs.InitRoutes()
@@ -56,5 +58,6 @@ func main() {
 	log.Println("Shutting down server...")
 
 	routs.KillServer()
-	database.KillDB()
+	// TODO uncomment this
+	//database.KillDB()
 }
